@@ -2,7 +2,7 @@ console.log("It works!");
 
 const button = document.querySelector("button");
 const otherButton = document.querySelector("#sub");
-const key = keyCode = 13;
+//const key = keyCode = 13;
 
 const updateText = function() {
     const text = document.querySelector("#heading");
@@ -18,4 +18,4 @@ const updateFirst = function() {
 
 button.addEventListener("click", updateText);
 otherButton.addEventListener("click", updateFirst);
-key.addEventListener("keyup", updateFirst);
+//key.addEventListener("keyup", updateFirst);
