@@ -2,7 +2,7 @@ console.log("It works!");
 
 const button = document.querySelector("button");
 const otherButton = document.querySelector("#sub");
-const key = "Enter".key;
+const key = keyCode = 13;
 
 const updateText = function() {
     const text = document.querySelector("#heading");
