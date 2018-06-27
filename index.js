@@ -2,15 +2,19 @@ class App {
     constructor() {
         const button = document.querySelector("button");
         const submitButton = document.querySelector("#sub");
+        this.flickArray = new Array();
+        //flickArray.push("sdfsfa");
 
         button.addEventListener("click", () => {
-            this.updateText()
+            this.updateText();
         })
+        
         submitButton.addEventListener("click", (ev) => {
             ev.preventDefault();
             this.addToList(ev);
-            })
-        }
+        })
+    }
+
 
     addToList(ev) {
         ev.preventDefault();
@@ -21,34 +25,35 @@ class App {
         const flick = { 
             name: flickBox.value,
             year: yearBox.value,
-            }
+            };
         
         // const listElement = prepListElement(flickBox, yearBox);
         
+        this.flickArray.push(flick);
         list.appendChild(this.renderItem(flick));
         // list.innerHTML += `<li>${val}</li>`;
         flickBox.value =  "";
         yearBox.value = "";
     }
 
-    prepListElement(flickBox, yearBox) {
-        listElement = document.createElement('li');
+    // prepListElement(flickBox, yearBox) {
+    //     listElement = document.createElement('li');
         
-        const flickName = renderProperty("name", flickBox.value + " ");
-        flickName.style.color = "red";
-        flickName.style.fontSize = "50pt";
+    //     const flickName = renderProperty("name", flickBox.value + " ");
+    //     flickName.style.color = "red";
+    //     flickName.style.fontSize = "50pt";
         
-        const flickYear = renderProperty("year",  yearBox.value);
+    //     const flickYear = renderProperty("year",  yearBox.value);
          
-        flickYear.style.fontFamily = "Time New Roman";
-        flickYear.style.fontSize = "40pt";
+    //     flickYear.style.fontFamily = "Time New Roman";
+    //     flickYear.style.fontSize = "40pt";
         
-        listElement.append(flickName);
-        listElement.append(flickYear);
+    //     listElement.append(flickName);
+    //     listElement.append(flickYear);
         
         
-         return listElement;
-    }
+    //      return listElement;
+    // }
 
     renderItem(flick) {
         const item = document.createElement("li");
@@ -72,6 +77,7 @@ class App {
         const span = document.createElement("span");
         span.classList.add(name);
         span.textContent = value + " ";
+        //Need to get it random properties
         return span;
     }
     
