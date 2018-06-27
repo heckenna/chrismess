@@ -2,3 +2,29 @@ body {
     font-family: 'Spirax',Helvetica, Arial, Helvetica, sans-serif;
     color:rgba(61, 0, 110, 0.884)
 }
+
+header {
+    /* background-image: url(chris_160.jpg); */
+    background-size: contain;
+    text-align: center;
+    background-repeat: no-repeat;
+    border: 0.5 rem solid white;
+    height:19vw;
+    font-size: 3vw;
+    margin: -2vw auto 0;
+}
+
+header img {
+    width: 80%;
+    display: block;
+    margin: -20vw auto 0;
+}
+
+form > div {
+    width: 100%;
+
+}
+
+button {
+    object-fit: fill;
+}
