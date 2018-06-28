@@ -38,16 +38,18 @@ class App {
         this.buttonArray.push(newButton);
         this.flickArray.push(flick);
         const item = this.renderItem(flick)
+        item.appendChild(newButton);
         this.list.appendChild(item);
         //list.appendChild(createElement("li"));
-        this.list.appendChild(newButton);
+        // this.list.appendChild(newButton);
         //list.removeChild(newButton);
-        debugger
+        // debugger
         // this.list.removeChild(item);
         
-        newButton.addEventListener("click", (item) => {
+        newButton.addEventListener("click", (item) =>{
             this.removeEntry(item);
-        })
+        });
+    
         // list.innerHTML += `<li>${val}</li>`;
         flickBox.value =  "";
         yearBox.value = "";
@@ -71,9 +73,10 @@ class App {
         
     //      return listElement;
     // }
-    removeEntry(item) {
-        debugger
-        this.flickArray.pop(item);
+    removeEntry(item){
+        // debugger
+        // this.flickArray.pop(item);
+
         this.list.removeChild(item);
         
     }
@@ -102,6 +105,16 @@ class App {
         span.classList.add(name);
         span.textContent = value + " ";
         //Need to get it random properties
+        return this.spanProperties(span);
+    }
+
+    spanProperties(span) {
+        const color = ["red", "blue", "green", "black", "purple", "lime"];
+        const size = ["40pt", "50pt",  "60pt", "55pt"];
+        const family = ['Spirax', "Times New Roman", 'Helvetica']
+        span.style.color = color[Math.floor(Math.random() * 6)];
+        span.style.fontSize = size[Math.floor(Math.random() * 4)];
+        span.style.fontFamily = family[Math.floor(Math.random() * 3)];
         return span;
     }
     
