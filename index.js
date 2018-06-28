@@ -2,7 +2,10 @@ class App {
     constructor() {
         const button = document.querySelector("button");
         const submitButton = document.querySelector("#sub");
+
         this.flickArray = new Array();
+        this.buttonArray = new Array();
+        this.list = document.querySelector("#flicks");
         //flickArray.push("sdfsfa");
 
         button.addEventListener("click", () => {
@@ -18,7 +21,7 @@ class App {
 
     addToList(ev) {
         ev.preventDefault();
-        const list = document.querySelector("#flicks");
+        
         const flickBox = document.querySelector("#flickName");
         const yearBox = document.querySelector("#flickYear");
         
@@ -28,9 +31,23 @@ class App {
             };
         
         // const listElement = prepListElement(flickBox, yearBox);
+        const newButton = document.createElement("button");
+        newButton.textContent = "Delete Entry";
         
+        
+        this.buttonArray.push(newButton);
         this.flickArray.push(flick);
-        list.appendChild(this.renderItem(flick));
+        const item = this.renderItem(flick)
+        this.list.appendChild(item);
+        //list.appendChild(createElement("li"));
+        this.list.appendChild(newButton);
+        //list.removeChild(newButton);
+        debugger
+        // this.list.removeChild(item);
+        
+        newButton.addEventListener("click", (item) => {
+            this.removeEntry(item);
+        })
         // list.innerHTML += `<li>${val}</li>`;
         flickBox.value =  "";
         yearBox.value = "";
@@ -54,6 +71,13 @@ class App {
         
     //      return listElement;
     // }
+    removeEntry(item) {
+        debugger
+        this.flickArray.pop(item);
+        this.list.removeChild(item);
+        
+    }
+
 
     renderItem(flick) {
         const item = document.createElement("li");
@@ -85,15 +109,9 @@ class App {
         const text = document.querySelector("#heading");
         text.textContent = "What do we have here?";
     }
-
-    
-    
-    
-
-    
-
-    
 }
+
+
  const app = new App;
 
 
