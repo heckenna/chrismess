@@ -20,7 +20,7 @@ class App {
 
 
     addToList(ev) {
-        ev.preventDefault();
+        // ev.preventDefault();
         
         const flickBox = document.querySelector("#flickName");
         const yearBox = document.querySelector("#flickYear");
@@ -31,14 +31,14 @@ class App {
             };
         
         // const listElement = prepListElement(flickBox, yearBox);
-        const newButton = document.createElement("button");
-        newButton.textContent = "Delete Entry";
+        // const newButton = document.createElement("button");
+        // newButton.textContent = "Delete Entry";
         
         
-        this.buttonArray.push(newButton);
+        // this.buttonArray.push(newButton);
         this.flickArray.push(flick);
         const item = this.renderItem(flick)
-        item.appendChild(newButton);
+        // item.appendChild(newButton);
         this.list.appendChild(item);
         //list.appendChild(createElement("li"));
         // this.list.appendChild(newButton);
@@ -46,9 +46,7 @@ class App {
         // debugger
         // this.list.removeChild(item);
         
-        newButton.addEventListener("click", (item) =>{
-            this.removeEntry(item);
-        });
+        
     
         // list.innerHTML += `<li>${val}</li>`;
         flickBox.value =  "";
@@ -76,6 +74,8 @@ class App {
     removeEntry(item){
         // debugger
         // this.flickArray.pop(item);
+        // const item = ev.target.closest(".flick");
+        // const list = item.parentElement;
 
         this.list.removeChild(item);
         
@@ -94,6 +94,17 @@ class App {
             const span = this.renderProperty(propertyName, flick[propertyName]);
             item.appendChild(span);
         })
+
+        //add del button
+        const newButton = document.createElement("button");
+        newButton.textContent = "Delete Entry";
+
+        newButton.addEventListener("click", () => this.removeEntry(item));
+
+        item.appendChild(newButton);
+        this.buttonArray.push(newButton);
+
+        
     
     
         return item;
@@ -120,7 +131,7 @@ class App {
     
     updateText() {
         const text = document.querySelector("#heading");
-        text.textContent = "What do we have here?";
+        text.textContent = "*Actually* New Stroop Test";
     }
 }
 
