@@ -28,3 +28,17 @@ form > div {
 button {
     object-fit: fill;
 }
+
+span.favorite {
+    display: none;
+}
+
+.fav {
+    background-color: gold;
+}
+
+.flick {
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+}

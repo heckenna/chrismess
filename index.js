@@ -4,9 +4,12 @@ class App {
         const submitButton = document.querySelector("#sub");
 
         this.flickArray = new Array();
-        this.buttonArray = new Array();
+        
+        // this.buttonArray = new Array();
         this.list = document.querySelector("#flicks");
+        this.load();
         //flickArray.push("sdfsfa");
+        
 
         button.addEventListener("click", () => {
             this.updateText();
@@ -16,8 +19,25 @@ class App {
             ev.preventDefault();
             this.addToList(ev);
         })
+
+        
+        // const tempList = JSON.parse(localStorage.getItem(this.flickArray));
+        // tempList.forEach(
+        //     this.addToList(ev)
+        // )
     }
 
+    addFlick(flick) {
+        this.flickArray.push(flick);
+        this.save();
+
+        const item = this.renderItem(flick);
+        this.list.appendChild(item);
+
+        if(flick.favorite) {
+            item.classList.add('fav');
+        }
+    }
 
     addToList(ev) {
         // ev.preventDefault();
@@ -28,31 +48,24 @@ class App {
         const flick = { 
             name: flickBox.value,
             year: yearBox.value,
+            favorite: false,
             };
         
-        // const listElement = prepListElement(flickBox, yearBox);
-        // const newButton = document.createElement("button");
-        // newButton.textContent = "Delete Entry";
-        
-        
-        // this.buttonArray.push(newButton);
-        this.flickArray.push(flick);
-        const item = this.renderItem(flick)
-        // item.appendChild(newButton);
-        this.list.appendChild(item);
-        //list.appendChild(createElement("li"));
-        // this.list.appendChild(newButton);
-        //list.removeChild(newButton);
-        // debugger
-        // this.list.removeChild(item);
+        this.addFlick(flick);
         
         
     
         // list.innerHTML += `<li>${val}</li>`;
         flickBox.value =  "";
         yearBox.value = "";
+        flickBox.focus();
     }
 
+
+    load() {
+        const flicks = JSON.parse(localStorage.getItem("flicks"));
+        flicks.forEach((flick) => this.addFlick(flick));
+    }
     // prepListElement(flickBox, yearBox) {
     //     listElement = document.createElement('li');
         
@@ -71,41 +84,52 @@ class App {
         
     //      return listElement;
     // }
-    removeEntry(item){
-        // debugger
-        // this.flickArray.pop(item);
+    removeEntry(flick, item){
         // const item = ev.target.closest(".flick");
         // const list = item.parentElement;
-
         this.list.removeChild(item);
+
+        const i = this.flickArray.indexOf(flick);
+        this.flickArray.splice(i,  1);
         
+        this.save();
+    }
+
+    renderActionButtons(flick, item) {
+        const actions = document.createElement("div");
+        actions.classList.add("actions");
+
+        //add del button
+        const delButton = document.createElement("button");
+        delButton.classList.add("remove");
+        delButton.innerHTML = '<i class="far fa-trash-alt" title="remove flick"></i>';
+
+        delButton.addEventListener("click", () => this.removeEntry(flick, item));
+
+        actions.appendChild(delButton);
+        // this.buttonArray.push(newButton);
+
+        const favButton = document.createElement("button");
+        favButton.classList.add("fav");
+        favButton.innerHTML = '<i class="fas fa-star"></i>';
+        favButton.addEventListener("click", (_ev) => this.toggleFavorite(flick, item));
+        actions.appendChild(favButton);
+
+        return actions
     }
 
 
     renderItem(flick) {
         const item = document.createElement("li");
         item.classList.add("flick");
-    
-        const properties = Object.keys(flick);
-    
-        //loop over each properties
-        properties.forEach((propertyName) => {
-            //build  a span
-            const span = this.renderProperty(propertyName, flick[propertyName]);
-            item.appendChild(span);
-        })
 
-        //add del button
-        const newButton = document.createElement("button");
-        newButton.textContent = "Delete Entry";
-
-        newButton.addEventListener("click", () => this.removeEntry(item));
-
-        item.appendChild(newButton);
-        this.buttonArray.push(newButton);
-
+        const properties = this.renderProperties(flick);
+        item.appendChild(properties);
         
-    
+
+        //add action buttons
+        const actions = this.renderActionButtons(flick, item);
+        item.appendChild(actions);
     
         return item;
     }
@@ -119,6 +143,26 @@ class App {
         return this.spanProperties(span);
     }
 
+    renderProperties(flick) {
+        const div = document.createElement("div");
+        div.classList.add("info");
+
+        const properties = Object.keys(flick);
+    
+        //loop over each properties
+        properties.forEach((propertyName) => {
+            //build  a span
+            const span = this.renderProperty(propertyName, flick[propertyName]);
+            div.appendChild(span);
+        })
+
+        return div;
+    }
+
+    save() {
+        localStorage.setItem("flick", JSON.stringify(this.flickArray));
+    }
+
     spanProperties(span) {
         const color = ["red", "blue", "green", "black", "purple", "lime"];
         const size = ["40pt", "50pt",  "60pt", "55pt"];
@@ -127,6 +171,11 @@ class App {
         span.style.fontSize = size[Math.floor(Math.random() * 4)];
         span.style.fontFamily = family[Math.floor(Math.random() * 3)];
         return span;
+    }
+
+    toggleFavorite(flick, item) {
+        flick.favorite = item.classList.toggle('fav');
+        this.save();
     }
     
     updateText() {
