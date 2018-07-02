@@ -64,7 +64,9 @@ class App {
 
     load() {
         const flicks = JSON.parse(localStorage.getItem("flicks"));
-        flicks.forEach((flick) => this.addFlick(flick));
+        if(flicks) {
+            flicks.forEach((flick) => this.addFlick(flick));
+        }
     }
     // prepListElement(flickBox, yearBox) {
     //     listElement = document.createElement('li');
